@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berekening Formule</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Berekening Formule</h1>
+        <form id="berekening-form">
+            <label for="a">Waarde A:</label>
+            <input type="number" id="a" required>
+            <label for="b">Waarde B (%):</label>
+            <input type="number" id="b" required>
+            <label for="c">Waarde C (dagen):</label>
+            <input type="number" id="c" required>
+            <button type="submit">Bereken</button>
+        </form>
+        <h2>Uitkomst:</h2>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // JavaScript code voor de berekening
+        function formula(a, b, c) {
+            return a * (b / 100) * (c / 366) * 0.9;
+        }
+
+        // Event listener voor het formulier
+        document.getElementById('berekening-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Verkrijg de inputwaarden
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            
+            // Voer de berekening uit
+            const result = formula(a, b, c);
+            
+            // Toon de uitkomst in het output element
+            document.getElementById('output').innerText = 'Resultaat: ' + result.toFixed(2);
+        });
+    </script>
+</body>
+</html>
