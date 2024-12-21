@@ -11,7 +11,7 @@
         <h1>Hesaplama formülü</h1>
         <form id="berekening-form">
             <label for="a">Miktar:</label>
-            <input type="number" id="a" required>
+            <input type="text" id="a" required>
             <label for="b">Yıllık faiz oranı (%):</label>
             <input type="number" id="b" required>
             <label for="c">Kaç gün:</label>
@@ -24,6 +24,16 @@
     </div>
 
     <script>
+        // Format number with commas
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Remove commas for calculation
+        function removeCommas(num) {
+            return num.replace(/\./g, '');
+        }
+
         // JavaScript code voor de berekening
         function formula(a, b, c) {
             return a * (b / 100) * (c / 365) * 0.9;
@@ -34,7 +44,7 @@
             event.preventDefault();
             
             // Verkrijg de inputwaarden
-            const a = parseFloat(document.getElementById('a').value);
+            const a = parseFloat(removeCommas(document.getElementById('a').value));
             const b = parseFloat(document.getElementById('b').value);
             const c = parseFloat(document.getElementById('c').value);
             
@@ -43,6 +53,11 @@
             
             // Toon de uitkomst in het output element
             document.getElementById('output').innerText = result.toFixed(2);
+        });
+
+        // Event listener to format input field when user types
+        document.getElementById('a').addEventListener('input', function() {
+            this.value = formatNumber(this.value);
         });
     </script>
 </body>
