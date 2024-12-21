@@ -23,44 +23,49 @@
         <div id="output"></div>
     </div>
 
-    <script>
-        // Format number with commas (thousands separator)
-        function formatNumber(num) {
-            // Remove any non-digit characters (except dot) first
-            num = num.replace(/[^\d]/g, '');
-            // Add thousands separators
-            return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-        }
+   <script>
+    // Format number with commas (thousands separator)
+    function formatNumber(num) {
+        num = num.replace(/[^\d]/g, '');  // Remove any non-digit characters (except dot)
+        return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add thousands separators
+    }
 
-        // Remove commas for calculation
-        function removeCommas(num) {
-            return num.replace(/\./g, '');
-        }
+    // Remove commas for calculation
+    function removeCommas(num) {
+        return num.replace(/\./g, '');  // Remove thousand separators
+    }
 
-        // JavaScript code for the calculation
-        function formula(a, b, c) {
-            return a * (b / 100) * (c / 365) * 0.9;
-        }
+    // JavaScript code for the calculation
+    function formula(a, b, c) {
+        return a * (b / 100) * (c / 365) * 0.9;
+    }
 
-        // Event listener for form submission
-        document.getElementById('berekening-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Get input values and parse correctly
-            const a = parseFloat(removeCommas(document.getElementById('a').value));
-            const b = parseFloat(document.getElementById('b').value);
-            const c = parseFloat(document.getElementById('c').value);
-            
-            // Perform calculation
-            const result = formula(a, b, c);
-            
-            // Display the result in the output element
-            document.getElementById('output').innerText = result.toFixed(2);
-        });
+    // Event listener for form submission
+    document.getElementById('berekening-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Get input values and parse correctly
+        const a = parseFloat(removeCommas(document.getElementById('a').value));
+        const b = parseFloat(document.getElementById('b').value);
+        const c = parseFloat(document.getElementById('c').value);
+        
+        // Perform calculation
+        const result = formula(a, b, c);
 
-        // Event listener to format input field as user types
-        document.getElementById('a').addEventListener('input', function() {
-            this.value = formatNumber(this.value);
-        });
-    </script>
+        // Round the result to the nearest whole number
+        const roundedResult = Math.round(result);
+
+        // Format the result with thousands separator
+        const formattedResult = formatNumber(roundedResult.toString());
+
+        // Display the result in the output element
+        document.getElementById('output').innerText = formattedResult;
+    });
+
+    // Event listener to format input field as user types
+    document.getElementById('a').addEventListener('input', function() {
+        this.value = formatNumber(this.value);
+    });
+</script>
+
 </body>
