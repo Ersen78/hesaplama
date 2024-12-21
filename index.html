@@ -1,44 +1,66 @@
-<script>
-    // Format number with commas (thousands separator)
-    function formatNumber(num) {
-        num = num.replace(/[^\d]/g, '');  // Remove any non-digit characters (except dot)
-        return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add thousands separators
-    }
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hesaplama</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hesaplama formülü</h1>
+        <form id="berekening-form">
+            <label for="a">Miktar:</label>
+            <input type="text" id="a" required>
+            <label for="b">Yıllık faiz oranı (%):</label>
+            <input type="number" id="b" required>
+            <label for="c">Kaç gün: (365)</label>
+            <input type="number" id="c" required>
+            <button type="submit">Hesapla</button>
+        </form>
+        <h2>Bu sonuç toplam faiz miktarından 10% vergi çıktıktan sonra</h2>
+        <h2>Sonuç:</h2>
+        <div id="output"></div>
+    </div>
 
-    // Remove commas for calculation
-    function removeCommas(num) {
-        return num.replace(/\./g, '');  // Remove thousand separators
-    }
+    <script>
+        // Format number with commas (thousands separator)
+        function formatNumber(num) {
+            // Remove any non-digit characters (except dot) first
+            num = num.replace(/[^\d]/g, '');
+            // Add thousands separators
+            return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
 
-    // JavaScript code for the calculation
-    function formula(a, b, c) {
-        return a * (b / 100) * (c / 365) * 0.9;
-    }
+        // Remove commas for calculation
+        function removeCommas(num) {
+            return num.replace(/\./g, '');
+        }
 
-    // Event listener for form submission
-    document.getElementById('berekening-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        // Get input values and parse correctly
-        const a = parseFloat(removeCommas(document.getElementById('a').value));
-        const b = parseFloat(document.getElementById('b').value);
-        const c = parseFloat(document.getElementById('c').value);
-        
-        // Perform calculation
-        const result = formula(a, b, c);
+        // JavaScript code for the calculation
+        function formula(a, b, c) {
+            return a * (b / 100) * (c / 365) * 0.9;
+        }
 
-        // Round the result to the nearest whole number
-        const roundedResult = Math.round(result);
+        // Event listener for form submission
+        document.getElementById('berekening-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get input values and parse correctly
+            const a = parseFloat(removeCommas(document.getElementById('a').value));
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            
+            // Perform calculation
+            const result = formula(a, b, c);
+            
+            // Display the result in the output element
+            document.getElementById('output').innerText = result.toFixed(2);
+        });
 
-        // Format the result with thousands separator
-        const formattedResult = formatNumber(roundedResult.toString());
-
-        // Display the result in the output element
-        document.getElementById('output').innerText = formattedResult;
-    });
-
-    // Event listener to format input field as user types
-    document.getElementById('a').addEventListener('input', function() {
-        this.value = formatNumber(this.value);
-    });
-</script>
+        // Event listener to format input field as user types
+        document.getElementById('a').addEventListener('input', function() {
+            this.value = formatNumber(this.value);
+        });
+    </script>
+</body>
