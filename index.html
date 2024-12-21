@@ -24,9 +24,12 @@
     </div>
 
     <script>
-        // Format number with commas
+        // Format number with commas (thousands separator)
         function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            // Remove any non-digit characters (except dot) first
+            num = num.replace(/[^\d]/g, '');
+            // Add thousands separators
+            return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         }
 
         // Remove commas for calculation
@@ -34,28 +37,28 @@
             return num.replace(/\./g, '');
         }
 
-        // JavaScript code voor de berekening
+        // JavaScript code for the calculation
         function formula(a, b, c) {
             return a * (b / 100) * (c / 365) * 0.9;
         }
 
-        // Event listener voor het formulier
+        // Event listener for form submission
         document.getElementById('berekening-form').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            // Verkrijg de inputwaarden
+            // Get input values and parse correctly
             const a = parseFloat(removeCommas(document.getElementById('a').value));
             const b = parseFloat(document.getElementById('b').value);
             const c = parseFloat(document.getElementById('c').value);
             
-            // Voer de berekening uit
+            // Perform calculation
             const result = formula(a, b, c);
             
-            // Toon de uitkomst in het output element
+            // Display the result in the output element
             document.getElementById('output').innerText = result.toFixed(2);
         });
 
-        // Event listener to format input field when user types
+        // Event listener to format input field as user types
         document.getElementById('a').addEventListener('input', function() {
             this.value = formatNumber(this.value);
         });
