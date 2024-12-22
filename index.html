@@ -18,7 +18,7 @@
             <input type="number" id="c" required>
             <button type="submit">Hesapla</button>
         </form>
-        <h2>Bu sonuç toplam faiz miktarından 10% vergi çıktıktan sonra</h2>
+        
         <h2>Sonuç:</h2>
         <div id="output"></div>
     </div>
@@ -37,7 +37,7 @@
 
     // JavaScript code for the calculation
     function formula(a, b, c) {
-        return a * (b / 100) * (c / 366) * 0.9;
+        return a * (b / 100) * (c / 366);
     }
 
     // Event listener for form submission
