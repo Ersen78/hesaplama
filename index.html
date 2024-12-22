@@ -29,6 +29,10 @@
         <!-- Display result after subtracting 10% -->
         <h3> 10% faiz çıktıktan sonra:</h3>
         <div id="adjusted-result"></div>
+
+        <!-- Display the final amount after adding adjusted result -->
+        <h3>Sonuç + 10% faiz:</h3>
+        <div id="final-result"></div>
     </div>
 
     <script>
@@ -80,6 +84,12 @@
             const roundedAdjustedResult = Math.round(adjustedResult); // Round to nearest integer
             const formattedAdjustedResult = formatNumber(roundedAdjustedResult.toString());
             document.getElementById('adjusted-result').innerText = formattedAdjustedResult;
+
+            // Add adjusted result to original amount
+            const finalAmount = a + adjustedResult;
+            const roundedFinalAmount = Math.round(finalAmount); // Round to nearest integer
+            const formattedFinalAmount = formatNumber(roundedFinalAmount.toString());
+            document.getElementById('final-result').innerText = formattedFinalAmount;
         });
 
         // Event listener to format input field as user types
