@@ -55,9 +55,10 @@ button:hover {
 }
 
 /* Style for output display */
-#output {
+#output, #ten-percent, #adjusted-result {
     font-size: 2rem;
     font-weight: bold;
     color: #333;
     margin-top: 20px;
 }
+
