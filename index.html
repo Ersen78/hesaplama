@@ -21,51 +21,69 @@
         
         <h2>Sonuç:</h2>
         <div id="output"></div>
+
+        <!-- Display 10% of the result -->
+        <h3>10% faiz oranı:</h3>
+        <div id="ten-percent"></div>
+
+        <!-- Display result after subtracting 10% -->
+        <h3> 10% faiz çıktıktan sonra:</h3>
+        <div id="adjusted-result"></div>
     </div>
 
-   <script>
-    // Format number with commas (thousands separator)
-    function formatNumber(num) {
-        num = num.replace(/[^\d]/g, '');  // Remove any non-digit characters (except dot)
-        return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add thousands separators
-    }
+    <script>
+        // Format number with commas (thousands separator)
+        function formatNumber(num) {
+            num = num.replace(/[^\d]/g, '');  // Remove any non-digit characters (except dot)
+            return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add thousands separators
+        }
 
-    // Remove commas for calculation
-    function removeCommas(num) {
-        return num.replace(/\./g, '');  // Remove thousand separators
-    }
+        // Remove commas for calculation
+        function removeCommas(num) {
+            return num.replace(/\./g, '');  // Remove thousand separators
+        }
 
-    // JavaScript code for the calculation
-    function formula(a, b, c) {
-        return a * (b / 100) * (c / 366);
-    }
+        // JavaScript code for the calculation
+        function formula(a, b, c) {
+            return a * (b / 100) * (c / 366);
+        }
 
-    // Event listener for form submission
-    document.getElementById('berekening-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        // Get input values and parse correctly
-        const a = parseFloat(removeCommas(document.getElementById('a').value));
-        const b = parseFloat(document.getElementById('b').value);
-        const c = parseFloat(document.getElementById('c').value);
-        
-        // Perform calculation
-        const result = formula(a, b, c);
+        // Event listener for form submission
+        document.getElementById('berekening-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Get input values and parse correctly
+            const a = parseFloat(removeCommas(document.getElementById('a').value));
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            
+            // Perform calculation
+            const result = formula(a, b, c);
 
-        // Round the result to the nearest whole number
-        const roundedResult = Math.round(result);
+            // Round the result to the nearest whole number
+            const roundedResult = Math.round(result);
 
-        // Format the result with thousands separator
-        const formattedResult = formatNumber(roundedResult.toString());
+            // Format the result with thousands separator
+            const formattedResult = formatNumber(roundedResult.toString());
 
-        // Display the result in the output element
-        document.getElementById('output').innerText = formattedResult;
-    });
+            // Display the result in the output element
+            document.getElementById('output').innerText = formattedResult;
 
-    // Event listener to format input field as user types
-    document.getElementById('a').addEventListener('input', function() {
-        this.value = formatNumber(this.value);
-    });
-</script>
+            // Calculate 10% of the result
+            const tenPercent = roundedResult * 0.1;
+            const formattedTenPercent = formatNumber(tenPercent.toString());
+            document.getElementById('ten-percent').innerText = formattedTenPercent;
 
+            // Subtract 10% from the result
+            const adjustedResult = roundedResult - tenPercent;
+            const formattedAdjustedResult = formatNumber(adjustedResult.toString());
+            document.getElementById('adjusted-result').innerText = formattedAdjustedResult;
+        });
+
+        // Event listener to format input field as user types
+        document.getElementById('a').addEventListener('input', function() {
+            this.value = formatNumber(this.value);
+        });
+    </script>
 </body>
+</html>
