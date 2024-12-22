@@ -70,13 +70,15 @@
             document.getElementById('output').innerText = formattedResult;
 
             // Calculate 10% of the result
-            const tenPercent = roundedResult * 0.1;
-            const formattedTenPercent = formatNumber(tenPercent.toString());
+            const tenPercent = result * 0.1;  // Correct calculation for 10%
+            const roundedTenPercent = Math.round(tenPercent); // Round to nearest integer
+            const formattedTenPercent = formatNumber(roundedTenPercent.toString());
             document.getElementById('ten-percent').innerText = formattedTenPercent;
 
             // Subtract 10% from the result
-            const adjustedResult = roundedResult - tenPercent;
-            const formattedAdjustedResult = formatNumber(adjustedResult.toString());
+            const adjustedResult = result - tenPercent;
+            const roundedAdjustedResult = Math.round(adjustedResult); // Round to nearest integer
+            const formattedAdjustedResult = formatNumber(roundedAdjustedResult.toString());
             document.getElementById('adjusted-result').innerText = formattedAdjustedResult;
         });
 
