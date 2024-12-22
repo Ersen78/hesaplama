@@ -69,8 +69,8 @@
             // Display the result in the output element
             document.getElementById('output').innerText = formattedResult;
 
-            // Calculate 10% of the result
-            const tenPercent = result * 0.1;  // Correct calculation for 10%
+            // Calculate 10% of the result (interest)
+            const tenPercent = result * 0.1;  // Correct calculation for 10% of the interest
             const roundedTenPercent = Math.round(tenPercent); // Round to nearest integer
             const formattedTenPercent = formatNumber(roundedTenPercent.toString());
             document.getElementById('ten-percent').innerText = formattedTenPercent;
