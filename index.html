@@ -12,9 +12,9 @@
             <label for="a">Miktar:</label>
             <input type="text" id="a" required>
             <label for="b">Yıllık faiz oranı (%):</label>
-            <input type="number" id="b" required>
+            <input type="number" id="b" step="0.01" required>
             <label for="c">Kaç gün: (365)</label>
-            <input type="number" id="c" step="0.01" required>
+            <input type="number" id="c" step="1" required>
             <button type="submit">Hesapla</button>
         </form>
         
@@ -26,7 +26,7 @@
         <div id="ten-percent"></div>
 
         <!-- Display result after subtracting 10% -->
-        <h3> 10% faiz çıktıktan sonra:</h3>
+        <h3>10% faiz çıktıktan sonra:</h3>
         <div id="adjusted-result"></div>
 
         <!-- Display the final amount after adding adjusted result -->
@@ -35,15 +35,12 @@
     </div>
 
     <script>
-        // Format number with commas (thousands separator)
+        // Helper function to format numbers with thousand separators and decimals
         function formatNumber(num) {
-            num = num.replace(/[^\d]/g, '');  // Remove any non-digit characters (except dot)
-            return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add thousands separators
-        }
-
-        // Remove commas for calculation
-        function removeCommas(num) {
-            return num.replace(/\./g, '');  // Remove thousand separators
+            return num.toLocaleString("nl-NL", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            });
         }
 
         // JavaScript code for the calculation
@@ -56,44 +53,38 @@
             event.preventDefault();
             
             // Get input values and parse correctly
-            const a = parseFloat(removeCommas(document.getElementById('a').value));
+            const a = parseFloat(document.getElementById('a').value.replace(/\./g, '').replace(',', '.'));
             const b = parseFloat(document.getElementById('b').value);
             const c = parseFloat(document.getElementById('c').value);
+            
+            if (isNaN(a) || isNaN(b) || isNaN(c)) {
+                alert('Lütfen geçerli değerler giriniz.');
+                return;
+            }
             
             // Perform calculation
             const result = formula(a, b, c);
 
-            // Round the result to the nearest whole number
-            const roundedResult = Math.round(result);
+            // Display the result
+            document.getElementById('output').innerText = formatNumber(result);
 
-            // Format the result with thousands separator
-            const formattedResult = formatNumber(roundedResult.toString());
-
-            // Display the result in the output element
-            document.getElementById('output').innerText = formattedResult;
-
-            // Calculate 10% of the result (interest)
-            const tenPercent = result * 0.1;  // Correct calculation for 10% of the interest
-            const roundedTenPercent = Math.round(tenPercent); // Round to nearest integer
-            const formattedTenPercent = formatNumber(roundedTenPercent.toString());
-            document.getElementById('ten-percent').innerText = formattedTenPercent;
+            // Calculate 10% of the result
+            const tenPercent = result * 0.1;
+            document.getElementById('ten-percent').innerText = formatNumber(tenPercent);
 
             // Subtract 10% from the result
             const adjustedResult = result - tenPercent;
-            const roundedAdjustedResult = Math.round(adjustedResult); // Round to nearest integer
-            const formattedAdjustedResult = formatNumber(roundedAdjustedResult.toString());
-            document.getElementById('adjusted-result').innerText = formattedAdjustedResult;
+            document.getElementById('adjusted-result').innerText = formatNumber(adjustedResult);
 
-            // Add adjusted result to original amount
+            // Add adjusted result to the original amount
             const finalAmount = a + adjustedResult;
-            const roundedFinalAmount = Math.round(finalAmount); // Round to nearest integer
-            const formattedFinalAmount = formatNumber(roundedFinalAmount.toString());
-            document.getElementById('final-result').innerText = formattedFinalAmount;
+            document.getElementById('final-result').innerText = formatNumber(finalAmount);
         });
 
         // Event listener to format input field as user types
         document.getElementById('a').addEventListener('input', function() {
-            this.value = formatNumber(this.value);
+            this.value = this.value.replace(/\D/g, '') // Remove non-digit characters
+                .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add thousand separators
         });
     </script>
 </body>
