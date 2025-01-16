@@ -13,7 +13,7 @@
             <input type="text" id="a" required>
             <label for="b">Yıllık faiz oranı (%):</label>
             <input type="number" id="b" step="0.01" required>
-            <label for="c">Kaç gün: (365)</label>
+            <label for="c">Kaç gün: (366)</label>
             <input type="number" id="c" step="1" required>
             <button type="submit">Hesapla</button>
         </form>
@@ -45,7 +45,7 @@
 
         // JavaScript code for the calculation
         function formula(a, b, c) {
-            return a * (b / 100) * (c / 365);
+            return a * (b / 100) * (c / 366);
         }
 
         // Event listener for form submission
