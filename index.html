@@ -21,11 +21,11 @@
         <h2>Sonuç:</h2>
         <div id="output"></div>
 
-        <!-- Display 10% of the result -->
+        <!-- Display 15% of the result -->
         <h3>15% faiz oranı:</h3>
         <div id="ten-percent"></div>
 
-        <!-- Display result after subtracting 10% -->
+        <!-- Display result after subtracting 15% -->
         <h3>15% faiz çıktıktan sonra:</h3>
         <div id="adjusted-result"></div>
 
@@ -70,7 +70,7 @@
 
             // Calculate 15% of the result
             const fifteenPercent = result * 0.15;
-            document.getElementById('ten-percent').innerText = formatNumber(tenPercent);
+            document.getElementById('ten-percent').innerText = formatNumber(fifteenPercent);
 
             // Subtract 15% from the result
             const adjustedResult = result - fifteenPercent;
